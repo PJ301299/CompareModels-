@@ -2,6 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Dropdown from 'react-bootstrap/Dropdown';
 import i10 from './i10.jpg';
 import i10r from './i10r.jpg';
 import i11 from './i11.jpg';
@@ -45,7 +46,7 @@ class App extends React.Component{
             }
           ],
       list:[],
-      ctr:0
+      cart:[]
     }
   }
 
@@ -82,14 +83,64 @@ class App extends React.Component{
     }
   }
 
+
+  addCart(x)
+  {
+    var temp = [...this.state.data];
+    const itemArr = temp.filter(mobile => mobile.id === x );
+    if(itemArr.length>0)
+    {
+      const item ={
+        id:itemArr[0].id,
+        model:itemArr[0].model,
+        price:itemArr[0].price
+      };
+      temp= [...this.state.cart];
+      temp.push(item);
+      this.setState({ cart : temp, ctr: this.state.ctr+1 });
+      console.log(this.state.cart);
+    }
+  }
+
+  deleteCart(y)
+  {
+      console.log("remove")
+      var temp =[...this.state.cart];
+      const updatedList = temp.filter(mobile => mobile.id !== y);
+      this.setState( {cart: updatedList} );
+      console.log(this.state.cart);
+  }
+
+
+
+
+
   render()
   {
     return(
-      <div className="container-fluid" style={{backgroundColor:"#D8D9DE"}}>
-        <h1 style={{backgroundColor:"#grey", textAlign:"center"}}>Compare Models</h1>
-        <div className="row" style={{backgroundColor:"#DCDCDC"}}>
+      <div className="container-fluid" style={{backgroundColor:"#000000"}}>
+        <Dropdown style={{float:"left", borderColor:"white", backgroundColor:"#black" }}>
+        <Dropdown.Toggle variant="success" id="dropdown-basic" style={{backgroundColor:"black", borderColor:"white", padding:"15px 20px"}}>
+          CART
+        </Dropdown.Toggle>
 
-          <div className="col-sm-3" style={{backgroundColor:"black", borderStyle:"solid", borderColor:"black"}}>
+        <Dropdown.Menu style={{backgroundColor:"#f1f1f1", padding:"50px", width:"400px"}}>
+          <Dropdown.Item href="#/action-1" >
+          {this.state.cart.map(phone =>{
+              return (<div key={phone.id}>
+                <b style={{fontSize:"20px"}}>{phone.model}</b>
+                <p>{phone.price}</p>
+                <hr/>
+                </div>);
+            }
+            )}
+          </Dropdown.Item>
+          </Dropdown.Menu>
+      </Dropdown>
+        <h1 style={{backgroundColor:"black", textAlign:"center", color:"white"}}>Compare Models</h1>
+        <br/>
+        <div className="row" style={{backgroundColor:"#000000"}}>
+          <div className="col-sm-3" style={{backgroundColor:"black", borderStyle:"solid", borderColor:"white"}}>
               <img src ={i10} className="image" style={{width:"100%", height:"400px"}}/>
                 <div className="caption">
                 <p>iPhone X</p>
@@ -101,10 +152,20 @@ class App extends React.Component{
                 <button className="button" onClick ={() => this.deleteItem(1)} style={{float:"right"}}>
                 Remove
                 </button>
+                <br/>
+                <br/>
+                <br/>
+                <button className="button" onClick={() => this.addCart(1)}>
+                  Add To Cart
+                </button>
+                <br/>
+                <button className="button" onClick={() => this.deleteCart(1)}>
+                 Delete
+                </button>
                 </div>
             </div>
 
-          <div className="col-sm-3" style={{backgroundColor:"black",  borderStyle:"solid", borderColor:"black"}}>
+          <div className="col-sm-3" style={{backgroundColor:"black",  borderStyle:"solid", borderColor:"white"}}>
             <img src ={i10r} className="image" style={{width:"100%", height:"400px",}}/>
             <div className="caption">
             <p>iPhone Xr</p>
@@ -116,10 +177,20 @@ class App extends React.Component{
             <button className="button" onClick ={() => this.deleteItem(2)} style={{float:"right"}}>
             Remove
             </button>
+            <br/>
+            <br/>
+            <br/>
+            <button className="button" onClick={() => this.addCart(2)}>
+            Add To Cart
+            </button>
+            <br/>
+            <button className="button" onClick={() => this.deleteCart(2)}>
+             Delete
+            </button>
             </div>
           </div>
 
-          <div className="col-sm-3" style={{backgroundColor:"black", borderStyle:"solid", borderColor:"black"}}>
+          <div className="col-sm-3" style={{backgroundColor:"black", borderStyle:"solid", borderColor:"white"}}>
             <img src ={i11} className="image" style={{width:"100%", height:"400px"}}/>
             <div className="caption">
             <p>iPhone 11</p>
@@ -131,10 +202,20 @@ class App extends React.Component{
             <button className="button" onClick ={() => this.deleteItem(3)} style={{float:"right"}}>
             Remove
             </button>
+            <br/>
+            <br/>
+            <br/>
+            <button className="button" onClick={() => this.addCart(3)}>
+            Add To Cart
+            </button>
+            <br/>
+            <button className="button" onClick={() => this.deleteCart(3)}>
+             Delete
+            </button>
             </div>
           </div>
 
-          <div className="col-sm-3" style={{backgroundColor:"black", borderStyle:"solid", borderColor:"black"}}>
+          <div className="col-sm-3" style={{backgroundColor:"black", borderStyle:"solid", borderColor:"white"}}>
             <img src ={i11pro} style={{width:"100%", height:"400px"}}/>
             <div className="caption">
             <p>iPhone 11 Pro</p>
@@ -146,12 +227,22 @@ class App extends React.Component{
             <button className="button" onClick ={() => this.deleteItem(4)} style={{float:"right"}}>
             Remove
             </button>
+            <br/>
+            <br/>
+            <br/>
+            <button className="button" onClick={() => this.addCart(4)}>
+            Add To Cart
+            </button>
+            <br/>
+            <button className="button" onClick={() => this.deleteCart(4)}>
+             Delete
+            </button>
             </div>
           </div>
         </div>
         <br/>
         <br/>
-        <div className = "row" style={{backgroundColor:"#A1AAB3"}}>
+        <div className = "row" style={{backgroundColor:"#E0E0E0"}}>
           <div className = "col-sm-2" style={{ borderStyle:"inset"}}>
             <h4 className="caption" style={{color:"black", fontSize:"30px"}}>Model</h4>
             <hr/>
@@ -203,12 +294,3 @@ class App extends React.Component{
 }
 
 export default App;
-
-
-/*{this.state.list.map(phone =>{
-  return (<li key={phone.id}>
-    <p>{phone.model}</p>
-    <p>{phone .price}</p>
-    </li>);
-}
-)}*/
