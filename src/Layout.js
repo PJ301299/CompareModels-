@@ -47,12 +47,10 @@ class Layout extends React.Component{
           ],
       list:[],
       cart:[],
-      username:"admin",
-      pass:"123qwe"
+      username:"",
+      pass:""
     }
   }
-
-
   addItem(x)
   {
     var temp = [...this.state.data];
@@ -121,6 +119,7 @@ class Layout extends React.Component{
   {
     return(
       <div className="container-fluid" style={{backgroundColor:"#000000"}}>
+        <p style={{color:"white", fontSize:"20px"}}> Welcome Admin </p>
         <Dropdown style={{float:"left", borderColor:"white", backgroundColor:"#black" }}>
         <Dropdown.Toggle variant="success" id="dropdown-basic" style={{backgroundColor:"black", borderColor:"white", padding:"15px 20px"}}>
           CART
